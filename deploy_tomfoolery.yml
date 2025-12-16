@@ -3,6 +3,12 @@
   become: yes
 
   tasks:
+    - name: Ensure unzip is installed
+      ansible.builtin.apt:
+        name: unzip
+        state: latest
+        update_cache: yes
+
     - name: Copy deployment zip to the target
       ansible.builtin.copy:
         src: tomfoolery.zip

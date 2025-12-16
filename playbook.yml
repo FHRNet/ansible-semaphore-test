@@ -1,4 +1,5 @@
-- hosts: all
+- name: Baserole to apply to all servers
+  hosts: all
   become: yes
 
   tasks:
@@ -7,5 +8,26 @@
       dest: /root/test.txt
       content: |
         I am a testing file
-        That semaphore should be keeping updated
+        that semaphore should be keeping updated
         {{ ansible_date_time.iso8601 }}
+
+  - name: Apply sysctl.d/99-test.conf
+    ansible.builtin.copy:
+      dest: /etc/sysctl.d/99-test.conf
+      content: |
+        # Some example sysctl
+        net.ipv4.tcp_syncookies = 1
+        net.ipv4.tcp_rfc1337 = 1
+
+  - name: Apply sysctl
+    ansible.builtin.command: sysctl --system
+
+  - name: Ensure users exist
+    ansible.builtin.user:
+      name: "{{ item }}"
+      comment: "Test user"
+      system: true
+    loop:
+    - user1
+    - user2
+    - user3

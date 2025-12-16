@@ -29,4 +29,4 @@
       ansible.builtin.file:
         state: file
         mode: '0755'
-        dest: /opt/tomfoolery/main
+        dest: /opt/tomfoolery/memalloc-master/main

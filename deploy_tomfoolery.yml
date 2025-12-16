@@ -1,0 +1,21 @@
+- name: Sample task to deploy tomfoolery
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Copy deployment zip to the target
+      ansible.builtin.copy:
+        src: tomfoolery.zip
+        dest: /tmp/tomfoolery.zip
+
+    - name: Unzip the deployment package
+      ansible.builtin.unarchive:
+        src: /tmp/tomfoolery.zip
+        dest: /opt/tomfoolery
+        remote_src: yes
+
+    - name: Ensure tomfoolery is executable
+      ansible.builtin.file:
+        state: file
+        mode: '0755'
+        dest: /opt/tomfoolery/main

@@ -8,6 +8,11 @@
         src: tomfoolery.zip
         dest: /tmp/tomfoolery.zip
 
+    - name: Ensure /opt/tomfoolery exists
+      ansible.builtin.file:
+        dest: /opt/tomfoolery
+        state: directory
+
     - name: Unzip the deployment package
       ansible.builtin.unarchive:
         src: /tmp/tomfoolery.zip
